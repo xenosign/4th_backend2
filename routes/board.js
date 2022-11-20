@@ -33,6 +33,27 @@ router.get('/modify/:title', (req, res) => {
   res.render('board_modify', { selectedArticle });
 });
 
+router.post('/title/:title', (req, res) => {
+  if (req.body.title && req.body.content) {
+    const arrIndex = ARTICLE.findIndex(
+      (_article) => _article.title === req.params.title
+    );
+    if (arrIndex !== -1) {
+      ARTICLE[arrIndex].title = req.body.title;
+      ARTICLE[arrIndex].content = req.body.content;
+      res.redirect('/board');
+    } else {
+      const err = new Error('해당 제목의 글이 없습니다.');
+      err.statusCode = 404;
+      throw err;
+    }
+  } else {
+    const err = new Error('요청 쿼리 이상');
+    err.statusCode = 404;
+    throw err;
+  }
+});
+
 router.delete('/title/:title', (req, res) => {
   const arrIndex = ARTICLE.findIndex(
     (_article) => _article.title === req.params.title
