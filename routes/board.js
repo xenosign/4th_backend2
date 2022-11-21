@@ -25,6 +25,22 @@ router.get('/write', (req, res) => {
   res.render('board_write');
 });
 
+router.post('/', (req, res) => {
+  console.log(req.body);
+  if (req.body.title && req.body.content) {
+    const newArticle = {
+      title: req.body.title,
+      content: req.body.content,
+    };
+    ARTICLE.push(newArticle);
+    res.redirect('/board');
+  } else {
+    const err = new Error('요청 이상');
+    err.statusCode = 404;
+    throw err;
+  }
+});
+
 router.get('/modify/:title', (req, res) => {
   const arrIndex = ARTICLE.findIndex(
     (_article) => _article.title === req.params.title
