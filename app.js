@@ -7,7 +7,6 @@ const PORT = 4000;
 const indexRouter = require('./routes');
 const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
-const boardRouter = require('./routes/board');
 
 app.set('view engine', 'ejs');
 
@@ -18,7 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/posts', postRouter);
-app.use('/board', boardRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
