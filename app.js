@@ -9,6 +9,7 @@ const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
 const boardRouter = require('./routes/board');
 const dataRouter = require('./routes/data');
+const dbBoardRouter = require('./routes/dbBoard');
 
 app.set('view engine', 'ejs');
 
@@ -21,6 +22,7 @@ app.use('/users', userRouter);
 app.use('/posts', postRouter);
 app.use('/board', boardRouter);
 app.use('/data', dataRouter);
+app.use('/dbBoard', dbBoardRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack);
