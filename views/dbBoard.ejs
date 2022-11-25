@@ -137,7 +137,7 @@
             </div>
             <div class="foot">
               <a class="btn orange" href="/dbBoard/modify/<%= ARTICLE[i].ID_PK %>">수정</a>
-              <a class="btn blue" href="#" onclick="deleteArticle('<%= ARTICLE[i].title %>')">삭제</a>
+              <a class="btn blue" href="#" onclick="deleteArticle('<%= ARTICLE[i].ID_PK %>')">삭제</a>
             </div>
           </li>
           <% } %>
@@ -152,14 +152,14 @@
 </body>
 
 <script>
-  function deleteArticle(title) {
-    fetch(`board/delete/${title}`, {
+  function deleteArticle(id) {
+    fetch(`dbBoard/delete/${id}`, {
       method: 'delete',
       headers: {
         'Content-type': 'application/json'
       },
     }).then((res) => {
-      location.href = '/board';
+      location.href = '/dbBoard';
     })
   }
 </script>

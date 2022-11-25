@@ -16,7 +16,7 @@ const db = {
       (err, data) => {
         if (err) throw err;
         cb(data);
-      }
+      },
     );
   },
   // 특정 ID 를 가지는 게시글 찾기
@@ -26,7 +26,7 @@ const db = {
       (err, data) => {
         if (err) throw err;
         cb(data);
-      }
+      },
     );
   },
   // 특정 ID 를 가지는 게시글 수정하기
@@ -36,7 +36,17 @@ const db = {
       (err, data) => {
         if (err) throw err;
         cb(data);
-      }
+      },
+    );
+  },
+  // 특정 ID 를 가지는 게시글 삭제하기
+  deleteArticle: (id, cb) => {
+    connection.query(
+      `DELETE FROM mydb.board WHERE ID_PK = ${id};`,
+      (err, data) => {
+        if (err) throw err;
+        cb(data);
+      },
     );
   },
 };

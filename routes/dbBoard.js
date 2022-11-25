@@ -71,4 +71,24 @@ router.post('/modify/:id', (req, res) => {
   }
 });
 
+// 게시글 삭제
+router.delete('/delete/:id', (req, res) => {
+  if (req.params.id) {
+    db.deleteArticle(req.params.id, (data) => {
+      console.log(data);
+      if (data.protocol41) {
+        res.send('삭제 완료');
+      } else {
+        const err = new Error('글 삭제 실패');
+        err.statusCode = 404;
+        throw err;
+      }
+    });
+  } else {
+    const err = new Error('ID 파라미터 값이 없습니다!');
+    err.statusCode = 404;
+    throw err;
+  }
+});
+
 module.exports = router;
