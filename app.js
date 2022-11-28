@@ -6,7 +6,7 @@ const session = require('express-session');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT;
+const { PORT } = process.env;
 
 const indexRouter = require('./routes');
 const userRouter = require('./routes/users');
