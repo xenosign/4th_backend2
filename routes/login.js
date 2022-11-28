@@ -16,6 +16,14 @@ router.post('/', (req, res) => {
       if (data[0].PASSWORD === req.body.password) {
         req.session.login = true;
         req.session.userId = req.body.id;
+
+        // 쿠키 발행
+        res.cookie('user', req.body.id, {
+          maxAge: 1000 * 20,
+          httpOnly: true,
+          signed: true,
+        });
+
         res.redirect('/dbBoard');
       } else {
         res.status(400);
@@ -36,6 +44,7 @@ router.post('/', (req, res) => {
 router.get('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) throw err;
+    res.clearCookie('user');
     res.redirect('/');
   });
 });

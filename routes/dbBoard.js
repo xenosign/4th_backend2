@@ -4,8 +4,9 @@ const db = require('../controllers/boardController');
 
 const router = express.Router();
 
+// 로그인 처리 함수
 function isLogin(req, res, next) {
-  console.log(req.session.login, req.signedCookies.user);
+  console.log('session', req.session.login, 'cookie', req.signedCookies.user);
   if (req.session.login || req.signedCookies.user) {
     next();
   } else {
