@@ -1,6 +1,10 @@
 // @ts-check
-export const animals = ['dog', 'cat'];
+export default class Animal {
+  constructor() {
+    this.animals = ['dog', 'cat', 'chicken'];
+  }
 
-export default function showAnimals() {
-  animals.map((el) => console.log(el));
+  showAnimals() {
+    this.animals.map((value) => console.log(value));
+  }
 }
