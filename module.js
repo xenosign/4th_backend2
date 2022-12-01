@@ -1,5 +1,5 @@
 // @ts-check
-import { arr, sumAll } from './calc.js';
+import { animals } from './animals.js';
 
-console.log(arr);
-console.log(sumAll());
+console.log(animals.animals);
+animals.showAnimals();
