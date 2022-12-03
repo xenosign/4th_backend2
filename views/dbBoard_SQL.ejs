@@ -141,8 +141,8 @@
             </div>
             <div class="foot">
               <% if (ARTICLE[i].USERID === userId) { %>
-              <a class="btn orange" href="/dbBoard/modify/<%= ARTICLE[i]._id %>">수정</a>
-              <a class="btn blue" href="#" onclick="deleteArticle('<%= ARTICLE[i]._id %>')">삭제</a>
+              <a class="btn orange" href="/dbBoard/modify/<%= ARTICLE[i].ID_PK %>">수정</a>
+              <a class="btn blue" href="#" onclick="deleteArticle('<%= ARTICLE[i].ID_PK %>')">삭제</a>
               <% } %>
             </div>
           </li>

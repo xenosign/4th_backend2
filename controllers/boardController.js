@@ -1,53 +1,63 @@
 // @ts-chcek
+const { ObjectId } = require('mongodb');
+
 const connection = require('./dbConnect');
+const mongoClient = require('./mongoConnect');
 
 const db = {
   // 모든 글 정보 가져오기
-  getAllArticles: (cb) => {
-    connection.query('SELECT * FROM mydb.board;', (err, data) => {
-      if (err) throw err;
-      cb(data);
-    });
+  getAllArticles: async () => {
+    const client = await mongoClient.connect();
+    const board = client.db('kdt4').collection('board');
+
+    const allArticlesCursor = board.find({});
+    const allArticles = await allArticlesCursor.toArray();
+    return allArticles;
   },
   // 새로운 글 작성하기
-  writeArticle: (newArticle, cb) => {
-    connection.query(
-      `INSERT INTO mydb.board (USERID, TITLE, CONTENT) VALUES ('${newArticle.id}', '${newArticle.title}', '${newArticle.content}');`,
-      (err, data) => {
-        if (err) throw err;
-        cb(data);
-      },
-    );
+  writeArticle: async (newArticle) => {
+    const client = await mongoClient.connect();
+    const board = client.db('kdt4').collection('board');
+
+    const writeResult = await board.insertOne(newArticle);
+    if (!writeResult.acknowledged) throw new Error('글 쓰기 실패');
+    return true;
   },
   // 특정 ID 를 가지는 게시글 찾기
-  getArticle: (id, cb) => {
-    connection.query(
-      `SELECT * FROM mydb.board WHERE ID_PK = ${id};`,
-      (err, data) => {
-        if (err) throw err;
-        cb(data);
-      },
-    );
+  getArticle: async (id) => {
+    const client = await mongoClient.connect();
+    const board = client.db('kdt4').collection('board');
+
+    const findArticle = await board.findOne({ _id: ObjectId(id) });
+    if (!findArticle) return false;
+    return findArticle;
   },
   // 특정 ID 를 가지는 게시글 수정하기
-  modifyArticle: (id, modifyArticle, cb) => {
-    connection.query(
-      `UPDATE mydb.board SET TITLE = '${modifyArticle.title}', CONTENT = '${modifyArticle.content}' WHERE ID_PK = ${id};`,
-      (err, data) => {
-        if (err) throw err;
-        cb(data);
+  modifyArticle: async (id, modifyArticle) => {
+    const client = await mongoClient.connect();
+    const board = client.db('kdt4').collection('board');
+
+    const updateResult = await board.updateOne(
+      { _id: ObjectId(id) },
+      {
+        $set: {
+          TITLE: modifyArticle.title,
+          CONTENT: modifyArticle.content,
+        },
       },
     );
+    if (!updateResult.acknowledged) throw new Error('게시글 수정 실패');
+    return true;
   },
   // 특정 ID 를 가지는 게시글 삭제하기
-  deleteArticle: (id, cb) => {
-    connection.query(
-      `DELETE FROM mydb.board WHERE ID_PK = ${id};`,
-      (err, data) => {
-        if (err) throw err;
-        cb(data);
-      },
-    );
+  deleteArticle: async (id) => {
+    const client = await mongoClient.connect();
+    const board = client.db('kdt4').collection('board');
+
+    const deleteResult = await board.deleteOne({ _id: ObjectId(id) });
+
+    if (!deleteResult.acknowledged) throw new Error('게시글 삭제 실패');
+    return true;
   },
 };
 
