@@ -1,9 +1,7 @@
 // @ts-check
-
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const uri =
-  'mongodb+srv://tetz:qwer1234@cluster0.sdiakr0.mongodb.net/?retryWrites=true&w=majority';
+const uri = process.env.MDB_URI;
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
