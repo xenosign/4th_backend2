@@ -150,19 +150,4 @@
     </div>
   </div>
 </body>
-
-<script>
-  function deleteArticle(title) {
-    fetch(`board/delete/${title}`, {
-      method: 'delete',
-      headers: {
-        'Content-type': 'application/json'
-      },
-    }).then((res) => {
-      location.href = '/board';
-    })
-  }
-</script>
-
-
 </html>
